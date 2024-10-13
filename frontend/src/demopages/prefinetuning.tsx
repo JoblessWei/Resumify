@@ -19,9 +19,9 @@ import { Progress } from "@/components/ui/progress"
 const formSchema = z.object({
     linkedin: z.string().min(2).max(50),
     github: z.string(),
+    joblink: z.string(),
     link1: z.union([z.string(), z.undefined()]),
-    link2: z.union([z.string(), z.undefined()]),
-    link3: z.union([z.string(), z.undefined()])
+    link2: z.union([z.string(), z.undefined()])
 })
 
 const PreFineTuning = () => {
@@ -36,9 +36,9 @@ const PreFineTuning = () => {
     const handleUpload = async (val: {
         linkedin: string;
         github: string;
+        joblink: string;
         link1?: string | undefined;
         link2?: string | undefined;
-        link3?: string | undefined;
     }
     ) => {
 
@@ -49,7 +49,7 @@ const PreFineTuning = () => {
         try {
             // Post form data to /compile-resume
             setUploading(true)
-            const response = await fetch(`http://localhost:8000/compile-resume?user_prompt=using%20my%20github%20which%20is%20${val.github}%20and%20my%20linkedin%20which%20is%20${val.linkedin}%20as%20sources%20finetune%20my%20resume%20to%20the%20given%20job%20app%20and%20make%20it%20relevant&jobdesc=the%20job%20link%20is%20https://jobs.lever.co/spotify/934ede25-003a-4af6-84ee-a8dc5555f243%20search%20and%20parse%20it`, {
+            const response = await fetch(`http://localhost:8000/compile-resume?user_prompt=using%20my%20github%20which%20is%20${val.github}%20and%20my%20linkedin%20which%20is%20${val.linkedin}%20as%20sources%20finetune%20my%20resume%20to%20the%20given%20job%20app%20and%20make%20it%20relevant&jobdesc=the%20job%20link%20is%20${val.joblink}%20search%20and%20parse%20it`, {
                 method: "POST",
                 body: formData,
 
@@ -120,6 +120,22 @@ const PreFineTuning = () => {
                 />
                 <FormField
                     control={form.control}
+                    name="joblink"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Joblink</FormLabel>
+                            <FormControl>
+                                <Input placeholder="shadcn" {...field} />
+                            </FormControl>
+                            <FormDescription>
+                                This field is for the job application
+                            </FormDescription>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
                     name="link1"
                     render={({ field }) => (
                         <FormItem>
@@ -140,22 +156,6 @@ const PreFineTuning = () => {
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>Link2</FormLabel>
-                            <FormControl>
-                                <Input placeholder="shadcn" {...field} />
-                            </FormControl>
-                            <FormDescription>
-                                This optional field is for any useful links
-                            </FormDescription>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="link3"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Link3</FormLabel>
                             <FormControl>
                                 <Input placeholder="shadcn" {...field} />
                             </FormControl>
