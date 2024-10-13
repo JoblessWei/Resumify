@@ -68,6 +68,10 @@ function saveResume(db: any, id: string, resumeFile: any) {
     };
 }
 
+const useSaveResume = () => {
+    return []
+}
+
 function getResume(db: any, id: string, callback: (resume: any) => void) {
     const transaction = db.transaction(['resumes'], 'readonly');
     const store = transaction.objectStore('resumes');
@@ -161,4 +165,4 @@ const useGetResume = (key: string = "base") => {
 
 }
 
-export { saveResume, listIndexes, deleteResume, useGetResume, getResumeKeyList }
+export { saveResume, listIndexes, deleteResume, useGetResume, getResumeKeyList, useSaveResume }

@@ -5,9 +5,9 @@ from fastapi.responses import JSONResponse, FileResponse
 from typing import Dict
 from openai import OpenAI
 import os
-from Resumify.keys import APIKEY
+from keys import APIKEY
 import json
-import Resumify.resumetemplate as resumetemplate
+import resumetemplate as resumetemplate
 from tooling import latex
 
 app = FastAPI()

@@ -1,0 +1,3 @@
+fastapi[standard]
+pdfminer.six
+opneai

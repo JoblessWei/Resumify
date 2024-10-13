@@ -62,6 +62,9 @@ function App() {
           <Button variant={"outline"} className='w-full flex justify-start my-2'>
             etc
           </Button>
+          <Button>
+            Demo!
+          </Button>
         </div>
       </> : <ResumeUploader />}
     </>
