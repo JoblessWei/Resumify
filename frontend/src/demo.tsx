@@ -4,6 +4,7 @@ import Intro from "./demopages/intro"
 import ResumeView from "./demopages/resumeview"
 import JobApplication from "./demopages/jobapplication"
 import PreFineTuning from "./demopages/prefinetuning"
+import DoubleResumeView from "./demopages/doubleview"
 
 const Demo = () => {
     const [index, setIndex] = useState(0)
@@ -12,7 +13,8 @@ const Demo = () => {
         <ResumeView onNextClicked={() => setIndex(2)} />,
         <JobApplication src="https://jobs.lever.co/spotify/934ede25-003a-4af6-84ee-a8dc5555f243" title="Junior Backend Engineer, Content Catalog" />,
         <PreFineTuning />,
-        <ResumeView resumeKey="finetuned" />
+        <ResumeView resumeKey="finetuned" />,
+        <DoubleResumeView />
     ]
 
     return <div className="flex flex-row">
@@ -39,7 +41,7 @@ const Demo = () => {
                 View finetuned resume
             </Button>
 
-            <Button variant={"outline"} className="mx-4 my-2" onClick={() => setIndex(3)}>
+            <Button variant={"outline"} className="mx-4 my-2" onClick={() => setIndex(5)}>
                 View Both
             </Button>
 
