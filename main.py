@@ -7,13 +7,28 @@ from openai import OpenAI
 import os
 from keys import APIKEY
 import json
-import Resumify.resumetemplate as resumetemplate
+import resumetemplate as resumetemplate
 from tooling import latex
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 
 app = FastAPI()
 
 # CHATGPT
 client = OpenAI(api_key=APIKEY)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all HTTP methods
+    allow_headers=["*"],  # Allows all headers
+)
+
+@app.get("/")
+async def get():
+    return "Hello"
+
 @app.post("/compile-resume")
 async def compile_resume(resume: UploadFile, user_prompt: str = None, jobdesc: str = None):
     # Step 1) Handle uploaded resume
@@ -47,7 +62,7 @@ async def compile_resume(resume: UploadFile, user_prompt: str = None, jobdesc: s
             model="gpt-4o-mini",
             temperature=0,
             messages=[
-                {"role": "system", "content": f"{resumetemplate} \n \n fix any grammatical and spelling mistakes and print only JSON text."},
+                {"role": "system", "content": f"{resumetemplate.template} \n \n fix any grammatical and spelling mistakes and print only JSON text."},
                 {"role": "user", "content": prompt}
             ]
             # temperature=0
@@ -58,7 +73,7 @@ async def compile_resume(resume: UploadFile, user_prompt: str = None, jobdesc: s
         # Check if returned json is empty:
         if not improved_resume_json:
              raise HTTPException(status_code=500, detail="Empty response from OpenAI")
-
+        print(improved_resume_json[7:-3])
         resume_data = json.loads(improved_resume_json[7:-3].replace("%", "percent"))
 
     except json.JSONDecodeError as e:
