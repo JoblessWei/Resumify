@@ -1,0 +1,9 @@
+.venv
+.env.keys
+Michael Resume.pdf
+frontend/node_modules
+__pycache__
+main.tex
+Resumify/pdf/*
+pdf/*
+tooling/message.txt

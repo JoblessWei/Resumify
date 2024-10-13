@@ -1,0 +1,6 @@
+pdf/
+latexmkrc
+compile.command
+venv
+__pycache__
+extension/*

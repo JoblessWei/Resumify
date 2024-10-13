@@ -1,0 +1,12 @@
+
+services:
+  fastapi-app:
+    image: python:3.9-slim  # Use the official Python image
+    command: bash -c "pip install --no-cache-dir -r requirements.txt && fastapi dev app.py --host 0.0.0.0 --port 8000" # Command to run FastAPI app
+    volumes:
+      - .:/server  # Mount the current directory inside the container
+    working_dir: /server  # Set the working directory inside the container
+    ports:
+      - "8000:8000"  # Expose port 8000
+    environment:
+      - PYTHONUNBUFFERED=1
