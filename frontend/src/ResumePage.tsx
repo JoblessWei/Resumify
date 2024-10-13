@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { saveResume } from './tooling/db';
+import { useSaveResume } from './tooling/db';
 function ResumeUploader() {
     const [resumeFile, setResumeFile] = useState(null); // To store resume in memory
     const [resumeText, setResumeText] = useState("");   // Optional: Processed resume content
-
+    const saveResume = useSaveResume()
     // Handle file upload
     const handleFileUpload = (event: any) => {
         const file = event.target.files[0];

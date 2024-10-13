@@ -1,61 +1,52 @@
-import { FileCheck } from "lucide-react"
+import { useState } from "react"
 import { Button } from "./components/ui/button"
-import { useGetResume, useSaveResume } from "./tooling/db"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import Intro from "./demopages/intro"
+import ResumeView from "./demopages/resumeview"
+import JobApplication from "./demopages/jobapplication"
+import PreFineTuning from "./demopages/prefinetuning"
 
 const Demo = () => {
-    const [resume] = useGetResume()
-    if (resume) {
-        console.log(resume);
+    const [index, setIndex] = useState(0)
+    const pages = [
+        <Intro onNextClicked={() => setIndex(1)} />,
+        <ResumeView onNextClicked={() => setIndex(2)} />,
+        <JobApplication src="https://jobs.lever.co/spotify/934ede25-003a-4af6-84ee-a8dc5555f243" title="Junior Backend Engineer, Content Catalog" />,
+        <PreFineTuning />,
+        <ResumeView resumeKey="finetuned" />
+    ]
 
-    }
-    const handleFileUpload = (event: any) => {
-        const file = event.target.files[0];
-        if (file) {
-            // Read file content (as text for example)
-            const reader = new FileReader();
-            reader.onload = (e: any) => {
-                saveToLocalStorage(file); // Optional: Save file to local storage
-            };
-            reader.readAsText(file); // You can change this to readAsBinaryString or other formats as needed
-        }
-    };
-    const saveToLocalStorage = (file: any, resumeid: string = "base") => {
-        // saveResume(resumeid, file)
-    };
-
-    return <div className="flex flex-row  h-screen">
-        <div className="flex-none border">
-            <Button variant={"outline"}>
+    return <div className="flex flex-row">
+        <div className="flex flex-col justify-stretch flex-none w-1/6 border">
+            <div className="h-16">
+                DEMO!!!
+            </div>
+            <Button variant={"outline"} className="mx-4 my-2" onClick={() => setIndex(0)}>
                 How it works
             </Button>
-        </div>
-        <div className="grow flex flex-col justify-center p-48">
-            <div className="">Hello, welcome to resumify</div>
-            <div>This is a tool that helps finetune your resume to job applications</div>
-            {null ? <div>
-                <div>
-                    <Alert>
-                        <FileCheck className="h-4 w-4" />
-                        <AlertTitle>{resume.name}</AlertTitle>
-                        <AlertDescription>
-                            uploaded {(new Date(resume.lastModifiedDate)).toString()}
-                        </AlertDescription>
-                    </Alert>
+            <Button variant={"outline"} className="mx-4 my-2" onClick={() => setIndex(1)}>
+                View your Resume
+            </Button>
 
-                </div>
-                <div>
-                    It looks like we already have a resume uploaded
-                    Lets see how you can fine tune the resume ➡️
-                </div>
+            <Button variant={"outline"} className="mx-4 my-2" onClick={() => setIndex(2)}>
+                Demo Job Application
+            </Button>
 
-            </div> : <div>
-                You don't have a resume uploaded. Why don't you upload a resume
-                <input type="file" onChange={handleFileUpload} accept=".pdf" className="bg-white text-black" />
-                {/* <Button><Upload className="h-4 w-4" /></Button> */}
-            </div>}
+            <Button variant={"outline"} className="mx-4 my-2" onClick={() => setIndex(3)}>
+                Resume Finetuning
+            </Button>
+
+            <Button variant={"outline"} className="mx-4 my-2" onClick={() => setIndex(4)}>
+                View finetuned resume
+            </Button>
+
+            <Button variant={"outline"} className="mx-4 my-2" onClick={() => setIndex(3)}>
+                View Both
+            </Button>
+
         </div>
+        {pages.length > index && pages[index]}
     </div>
 }
+
 
 export default Demo

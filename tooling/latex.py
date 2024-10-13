@@ -156,8 +156,8 @@ class Compiler():
                 lines.extend(project.totex())
             lines.append(" \\resumeSubHeadingListEnd\n")
 
-        skills = Skills(skill_map)
-        lines.extend(skills.totex())
+        
+        lines.extend(self.skill_map.totex())
         
         lines.append(self.postex)
 
@@ -193,7 +193,7 @@ class Compiler():
             ...
         
         skills = Skills(asjson["skill_map"])
-
+        
         return Compiler(profile=profile, projectlist=projectlist, experiencelist=experiencelist,
         skill_map=skills)
         ...
